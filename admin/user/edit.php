@@ -11,7 +11,8 @@ include "../public/common/config.php";
 $connect = connectDB();
 
 $id = $_GET["id"];
-$sql = "select * form user where id = {$id}";
+//$sql = "SELECT * FROM user WHERE id = {$id}";
+$sql = "SELECT * FROM `user` WHERE id = {$id}";
 
 
 
@@ -25,9 +26,25 @@ mysqli_query($connect,'set names utf8');
 //3.发送SQL语句
 $rst=mysqli_query($connect,$sql);
 
-$row = mysqli_fetch_assoc($rst);
+// 返回记录数
+$rowcount=mysqli_num_rows($rst);
+//echo  "共".$rowcount."行<br>";
+$rowArray =mysqli_fetch_array($rst);
 
+//print_r($rowArray);
+//echo "<br>";
+//
+$count = count($rowArray);
+//print_r("count = ".$count."<br>");
 
+//for($i=0;$i<count($rowArray);$i++) {
+//    print_r($i."行");
+//    echo " -----  ";
+//
+//    echo "rowArray i=".$rowArray["$i"];
+//    echo "<br>";
+//
+//}
 ?>
 
 
@@ -43,14 +60,16 @@ $row = mysqli_fetch_assoc($rst);
 
 <body>
 
-<form action="insert.php" method="post">
+<form action="update.php" method="post">
     <p>ID:</p>
-    <p><input type="text" name="ID" value="<?php echo $row["id"] ?>"></p>
+    <p><input type="text" name="ID" value="<?php echo $rowArray["id"] ?>"></p>
 
     <p>name:</p>
-    <p><input type="text" name="name" value="<?php echo $row["name"] ?>"></p>
+    <p><input type="text" name="name" value="<?php echo $rowArray["name"] ?>"></p>
 
-    <p><input type="submit" value="添加"></p>
+    <input type="hidden" name="oldId" value="<?php echo $rowArray["id"] ?>">
+
+    <p><input type="submit" value="修改"></p>
 </form>
 
 

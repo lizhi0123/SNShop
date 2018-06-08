@@ -16,9 +16,6 @@ $name = $_POST['name'];
 $sql = "INSERT INTO user (id, name) VALUES ('{$id}', '{$name}')";
 
 
-echo $sql;
-echo  "<br>";
-
 $result = mysqli_query($connect,$sql);
 
 
